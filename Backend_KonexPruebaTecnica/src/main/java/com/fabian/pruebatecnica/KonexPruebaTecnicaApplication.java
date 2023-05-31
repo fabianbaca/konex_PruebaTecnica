@@ -1,4 +1,4 @@
-package com.fabian.konex_PruebaTecnica;
+package com.fabian.pruebatecnica;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
