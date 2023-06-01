@@ -1,6 +1,7 @@
 package com.fabian.pruebatecnica.controller;
 
 
+import com.fabian.pruebatecnica.dto.MessageRest;
 import com.fabian.pruebatecnica.models.Medicament;
 import com.fabian.pruebatecnica.services.MedicamentService;
 import jakarta.validation.Valid;
@@ -37,19 +38,19 @@ public class MedicamentController {
 
     @PostMapping("/")
     @ResponseBody
-    public ResponseEntity<String> createMedicament(@RequestBody @Valid Medicament medicament) throws IOException {
+    public ResponseEntity<Medicament> createMedicament(@RequestBody @Valid Medicament medicament) throws IOException {
         return ResponseEntity.status(HttpStatus.CREATED).body(medicamentService.createMedicament(medicament));
     }
 
     @PutMapping("/{id}")
     @ResponseBody
-    public ResponseEntity<String> updateMedicament(@PathVariable("id") Long id, @RequestBody @Validated Medicament medicament) throws IOException {
+    public ResponseEntity<Medicament> updateMedicament(@PathVariable("id") Long id, @RequestBody @Validated Medicament medicament) throws IOException {
         return ResponseEntity.status(HttpStatus.OK).body(medicamentService.updateMedicament(medicament, id));
     }
 
     @DeleteMapping("/{id}")
     @ResponseBody
-    public ResponseEntity<String> deleteMedicament(@PathVariable("id") Long id) throws IOException {
+    public ResponseEntity<MessageRest> deleteMedicament(@PathVariable("id") Long id) throws IOException {
         return ResponseEntity.status(HttpStatus.OK).body(medicamentService.deleteMedicament(id));
     }
 

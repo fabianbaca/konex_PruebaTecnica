@@ -1,0 +1,194 @@
+<!-- <p-toast></p-toast>
+<p-table #dt2 [value]="medicaments" dataKey="id"  [paginator]="true" [rows]="5" [selectionPageOnly]="true" editMode="row"   [globalFilterFields]="['name']" [style]="{'min-width': '50rem'}">
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="width:14%">Name</th>
+            <th style="width:14%">laboratorie</th>
+            <th style="width:14%">date Manufacture</th>
+            <th style="width:14%">date Expiration</th>
+            <th style="width:14%">quantity Stock</th>
+            <th style="width:14%">unit Value</th>
+            <th style="width:14%"></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-medicament let-editing="editing" let-ri="rowIndex">
+        <tr [pEditableRow]="medicament">
+            <td>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input pInputText type="text" [(ngModel)]="medicament.name" required>
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{medicament.name}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input pInputText type="text" [(ngModel)]="medicament.laboratorie" required>
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{medicament.laboratorie}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input pInputText type="text" [(ngModel)]="medicament.dateManufacture" required>
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{medicament.dateManufacture}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input pInputText type="text" [(ngModel)]="medicament.dateExpiration" required>
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{medicament.dateExpiration}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input pInputText type="text" [(ngModel)]="medicament.quantityStock" required>
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{medicament.quantityStock}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input pInputText type="text" [(ngModel)]="medicament.unitValue" required>
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{medicament.unitValue | currency: 'USD'}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td>
+                <div class="flex align-items-center justify-content-center gap-2">
+                    <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" (click)="onRowEditInit(medicament)" class="p-button-rounded p-button-text"></button>
+                    <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="onRowEditSave(medicament)" class="p-button-rounded p-button-text p-button-success mr-2"></button>
+                    <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" (click)="onRowEditCancel(medicament, ri)" class="p-button-rounded p-button-text p-button-danger"></button>
+                </div>
+            </td>
+        </tr>
+    </ng-template>
+</p-table> -->
+
+
+
+<p-toast></p-toast>
+<p-toolbar styleClass="mb-4 gap-2">
+    <ng-template pTemplate="left">
+        <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+    </ng-template>
+</p-toolbar>
+
+<p-table
+#dt
+[value]="medicaments"
+[rows]="10"
+[paginator]="true"
+[globalFilterFields]="['name']"
+[tableStyle]="{ 'min-width': '75rem' }"
+[rowHover]="true"
+dataKey="id"
+currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+[showCurrentPageReport]="true"
+>
+    <ng-template pTemplate="caption">
+        <div class="flex align-items-center justify-content-between">
+            <h5 class="m-0">Manage Products</h5>
+            <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt?.filterGlobal($event.target?.value, 'contains')" placeholder="Search..." />
+            </span>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+
+            <th style="min-width:15rem">Name</th>
+            <th style="min-width:15rem">laboratorie</th>
+            <th style="min-width:15rem">date Manufacture</th>
+            <th style="min-width:15rem">date Expiration</th>
+            <th style="min-width:10rem">quantity Stock</th>
+            <th style="min-width:10rem">unit Value</th>
+            <th></th>
+
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-medicament>
+        <tr>
+            <td>{{ medicament.name }}</td>
+            <td>{{medicament.laboratorie}}</td>
+            <td>{{medicament.dateManufacture}}</td>
+            <td>{{medicament.dateExpiration}}</td>
+            <td>{{medicament.quantityStock}}</td>
+            <td>{{medicament.unitValue | currency: 'USD'}}</td>
+            <td>
+                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="onEditMedicament(medicament)"></button>
+                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="deleteMedicament(medicament)"></button>
+                <button pButton pRipple icon="pi pi-tag" class="p-button-rounded p-button-outlined" (click)="deleteMedicament(medicament)"></button>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+        <div class="flex align-items-center justify-content-between">In total there are {{ medicaments ? medicaments.length : 0 }} medicament.</div>
+    </ng-template>
+</p-table>
+
+<p-dialog [(visible)]="medicamentDialog" [style]="{ width: '500px' }" header="medicament Details" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="field">
+            <label for="name">Nombre</label>
+            <input type="text" pInputText id="name" [(ngModel)]="medicament.name" require/>
+            <small class="p-error" *ngIf="submitted && !medicament.name">Nombre es requerido.</small>
+        </div>
+        <br>
+        <div class="field">
+            <label for="laboratorie">Laboratorio de fabrica</label>
+            <input type="text" pInputText id="laboratorie" [(ngModel)]="medicament.laboratorie" required />
+            <small class="p-error" *ngIf="submitted && !medicament.laboratorie">Laboratorio es requerido.</small>
+        </div>
+        <br>
+        <div class="field">
+            <label for="dateManufacture">Fecha de fabricación</label>
+            <p-calendar class="mr-2" id="dateManufacture" [(ngModel)]="medicament.dateManufacture" dateFormat="yy-mm-dd"></p-calendar>
+            <small class="p-error" *ngIf="submitted && !medicament.dateManufacture">Fecha de fabricación es requerido.</small>
+        </div>
+        <br>
+        <div class="field">
+            <label for="dateExpiration">Fecha de vencimiento</label>
+            <p-calendar id="dateExpiration" class="w-12rem p-3 m-3" [(ngModel)]="medicament.dateExpiration" dateFormat="yy-mm-dd"> </p-calendar>
+            <small class="p-error" *ngIf="submitted && !medicament.dateExpiration">Fecha de vencimiento es requerido.</small>
+        </div>
+        <br>
+        <div class="field col">
+            <label for="unitValue"> Valor unitario </label>
+            <p-inputNumber id="unitValue" [(ngModel)]="medicament.unitValue" mode="currency" currency="USD" locale="en-US"></p-inputNumber>
+            <small class="p-error" *ngIf="submitted && !medicament.unitValue">Valor unitario es requerido.</small>
+        </div>
+        <br>
+        <div class="field col">
+            <label for="quantityStock">Cantidad en stock</label>
+            <p-inputNumber id="quantityStock" [(ngModel)]="medicament.quantityStock"></p-inputNumber>
+            <small class="p-error" *ngIf="submitted && !medicament.quantityStock">Cantidad is requerido.</small>
+        </div>
+
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-danger" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-success mr-2" (click)="clickSaveDialog()"></button>
+    </ng-template>
+</p-dialog>

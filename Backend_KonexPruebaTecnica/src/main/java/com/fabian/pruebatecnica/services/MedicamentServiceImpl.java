@@ -1,7 +1,9 @@
 package com.fabian.pruebatecnica.services;
 
+import com.fabian.pruebatecnica.dto.MessageRest;
 import com.fabian.pruebatecnica.models.Medicament;
 import com.fabian.pruebatecnica.repositories.MedicamentRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +19,8 @@ public class MedicamentServiceImpl implements MedicamentService {
 
 
     @Override
-    public String createMedicament(Medicament medicament) throws IOException {
-        repository.save(medicament);
-        return "se creo el medicamente";
+    public Medicament createMedicament(Medicament medicament) throws IOException {
+        return repository.save(medicament);
     }
 
     @Override
@@ -43,13 +44,15 @@ public class MedicamentServiceImpl implements MedicamentService {
     }
 
     @Override
-    public String deleteMedicament(Long id) throws IOException {
+    @Transactional
+    public MessageRest deleteMedicament(Long id) throws IOException {
         repository.deleteById(id);
-        return "Delete";
+        MessageRest messageRest = new MessageRest("200", "successfully remove");
+        return messageRest;
     }
 
     @Override
-    public String updateMedicament(Medicament medicament, Long id) throws IOException {
+    public Medicament updateMedicament(Medicament medicament, Long id) throws IOException {
 
          Optional<Medicament> oldMedicament = getMedicamentById(id);
          if (!oldMedicament.isPresent()) {
@@ -63,7 +66,7 @@ public class MedicamentServiceImpl implements MedicamentService {
          oldMedicament.get().setQuantityStock(medicament.getQuantityStock());
          oldMedicament.get().setUnitValue(medicament.getUnitValue());
 
-        repository.save(oldMedicament.get());
-        return "Se actualiso correctamete" ;
+
+        return repository.save(oldMedicament.get());
     }
 }

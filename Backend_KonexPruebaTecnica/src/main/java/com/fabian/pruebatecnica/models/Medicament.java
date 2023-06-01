@@ -1,13 +1,14 @@
 package com.fabian.pruebatecnica.models;
 
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -31,13 +32,13 @@ public class Medicament {
 
     @NotBlank(message = "date Manufacture cannot be null")
     @Column(name = "date_manufacture")
-    @JsonFormat(pattern ="yyyy-MM-dd")
-    private LocalDate  dateManufacture;
+    @DateTimeFormat(pattern ="yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+    private LocalDateTime  dateManufacture;
 
     @NotBlank(message = "date Expiration cannot be null")
     @Column(name = "date_expiration")
-    @JsonFormat(pattern ="yyyy-MM-dd")
-    private LocalDate dateExpiration;
+    @DateTimeFormat(pattern ="yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+    private LocalDateTime dateExpiration;
 
     @NotBlank(message = "quantity Stock cannot be null")
     @Column(name = "quantity_stock")
@@ -49,7 +50,7 @@ public class Medicament {
 
     public Medicament() {}
 
-    public Medicament(Long id, String name, String laboratorie, LocalDate dateManufacture, LocalDate dateExpiration, Integer quantityStock, Double unitValue) {
+    public Medicament(Long id, String name, String laboratorie, LocalDateTime dateManufacture, LocalDateTime dateExpiration, Integer quantityStock, Double unitValue) {
         this.id = id;
         this.name = name;
         this.laboratorie = laboratorie;

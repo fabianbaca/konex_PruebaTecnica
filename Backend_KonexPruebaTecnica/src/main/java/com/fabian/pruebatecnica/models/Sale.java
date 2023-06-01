@@ -23,7 +23,7 @@ public class Sale {
     @Column(name = "date_sale")
     @NotEmpty(message = "date Value cannot be null")
     @JsonFormat(pattern ="yyyy-MM-dd")
-    private LocalDate fecha;
+    private LocalDate dateSale;
 
     @ManyToOne
     @NotEmpty(message = "unit Value cannot be null")
@@ -32,27 +32,26 @@ public class Sale {
 
     @NotEmpty(message = "quantity Value cannot be null")
     @Column(name = "quantity")
-    private Integer cantidad;
+    private Integer quantity;
 
     @NotEmpty(message = "unit value Value cannot be null")
     @Column(name = "unit_value",columnDefinition = "NUMBER")
-    private BigDecimal valorUnitario;
+    private BigDecimal unitValue;
 
 
     @NotEmpty(message = "total value Value cannot be null")
     @Column(name = "total_value",columnDefinition = "NUMBER")
-    private BigDecimal valorTotal;
+    private BigDecimal totalValue;
 
     public Sale() {
     }
 
-    public Sale(Long id, LocalDate fecha, Medicament medicament, Integer cantidad, BigDecimal valorUnitario, BigDecimal valorTotal) {
+    public Sale(Long id, LocalDate dateSale, Medicament medicament, Integer quantity, BigDecimal unitValue, BigDecimal totalValue) {
         this.id = id;
-        this.fecha = fecha;
+        this.dateSale = dateSale;
         this.medicament = medicament;
-        this.cantidad = cantidad;
-        this.valorUnitario = valorUnitario;
-        this.valorTotal = valorTotal;
+        this.quantity = quantity;
+        this.unitValue = unitValue;
+        this.totalValue = totalValue;
     }
-
 }
