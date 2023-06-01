@@ -1,1 +1,40 @@
-<h1>hola</h1>
+<p-table
+#dt
+[value]="sales"
+[rows]="10"
+[paginator]="true"
+[tableStyle]="{ 'min-width': '75rem' }"
+[rowHover]="true"
+dataKey="id"
+currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+[showCurrentPageReport]="true"
+>
+<ng-template pTemplate="caption">
+    <div class="flex w-full justify-content-end gap-3">
+      <button pButton label="Limpiar" class="p-button-outlined" icon="pi pi-filter-slash" (click)="onCrear()"></button>
+      <span class="p-input-icon-left ml-auto"></span>
+      <p-calendar placeholder="Fecha inicial" name="startDate" [(ngModel)]="startDate" dateFormat="dd-mm-yy" [appendTo]="'body'" ></p-calendar>
+          <p-calendar placeholder="Fecha final" name="endDate" [(ngModel)]="endDate" dateFormat="dd-mm-yy" [appendTo]="'body'" ></p-calendar>
+          <button pButton label="Buscar" class="p-button-outlined" icon="pi pi-search" (click)="onfindAllByDateSaleBetween()"></button>
+    </div>
+  </ng-template>
+
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="min-width:15rem">Fecah de venta</th>
+            <th style="min-width:15rem">Medicamento</th>
+            <th style="min-width:15rem">Cantidad</th>
+            <th style="min-width:15rem">Valor unitario</th>
+            <th style="min-width:10rem">Valor total</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-sales>
+        <tr>
+            <td>{{sales.dateSale }}</td>
+            <td>{{sales?.medicament?.name}}</td>
+            <td>{{sales.quantity}}</td>
+            <td>{{sales.unitValue | currency: 'USD'}}</td>
+            <td>{{sales.totalValue | currency: 'USD'}}</td>
+        </tr>
+    </ng-template>
+</p-table>

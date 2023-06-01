@@ -2,9 +2,9 @@ import { Medicament } from "./medicament.model";
 
 export class Sale{
     id: any;
-    dateSale?: string;
-    medicamente?: Medicament;
-    quantity?: Number;
+    dateSale?: Date;
+    medicament?: Medicament;
+    quantity?: number;
     totalValue?: number;
     unitValue?: number;
 }

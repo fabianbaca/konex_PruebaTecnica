@@ -8,7 +8,8 @@ import {DialogModule} from 'primeng/dialog'
 import {InputNumberModule} from 'primeng/inputnumber';
 import {InputTextModule} from 'primeng/inputtext';
 import {CalendarModule} from 'primeng/calendar';
-import {MenubarModule} from 'primeng/menubar'
+import {MenubarModule} from 'primeng/menubar';
+import {TabMenuModule} from 'primeng/tabmenu';
 
 @NgModule({
   exports: [
@@ -20,7 +21,8 @@ import {MenubarModule} from 'primeng/menubar'
     InputNumberModule,
     InputTextModule,
     CalendarModule,
-    MenubarModule
+    MenubarModule,
+    TabMenuModule,
   ]
 })
 export class PrimeNgModule { }

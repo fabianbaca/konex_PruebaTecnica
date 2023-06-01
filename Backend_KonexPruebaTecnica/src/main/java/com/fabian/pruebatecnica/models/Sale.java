@@ -7,6 +7,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -22,7 +24,7 @@ public class Sale {
 
     @Column(name = "date_sale")
     @NotEmpty(message = "date Value cannot be null")
-    @JsonFormat(pattern ="yyyy-MM-dd")
+    @DateTimeFormat(pattern ="yyyy-MM-dd'T'HH:mm:ss.SSSZ")
     private LocalDate dateSale;
 
     @ManyToOne

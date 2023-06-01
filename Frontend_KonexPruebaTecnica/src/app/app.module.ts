@@ -7,13 +7,12 @@ import { MedicamentComponent } from './components/medicament/medicament.componen
 import { SaleComponent } from './components/sale/sale.component';
 import {MedicamentService} from './service/medicament.service'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 // Modulo Personalisado
 import { PrimeNgModule } from './prime-ng/prime-ng.module';
-import { ConfirmationService } from 'primeng/api';
-import { DatePipe } from '@angular/common';
+
 
 @NgModule({
   declarations: [
