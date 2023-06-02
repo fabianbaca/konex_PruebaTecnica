@@ -18,6 +18,8 @@ public class MedicamentServiceImpl implements MedicamentService {
     @Autowired
     private MedicamentRepository repository ;
 
+    private SaleService Saleservice;
+
 
     @Override
     public Medicament createMedicament(Medicament medicament) throws IOException {
@@ -45,10 +47,10 @@ public class MedicamentServiceImpl implements MedicamentService {
     }
 
     @Override
-    @Transactional
     public MessageRest deleteMedicament(Long id) throws IOException {
         repository.deleteById(id);
-        return new MessageRest("200", "successfully remove");
+        MessageRest messageRest = new MessageRest("200", "successfully remove");
+        return messageRest;
     }
 
     @Override

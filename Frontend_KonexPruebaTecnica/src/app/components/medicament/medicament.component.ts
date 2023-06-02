@@ -26,6 +26,7 @@ export class MedicamentComponent implements OnInit{
   saledialog: boolean;
   editDialog: boolean;
   clonedProducts: { [s: string]: Medicament } = {};
+  sales!: Sale[];
 
 
   constructor(private medicamentService: MedicamentService, private SaleService: SaleService, private messageService: MessageService, private datePipe: DatePipe) { 
@@ -39,6 +40,7 @@ export class MedicamentComponent implements OnInit{
 
   ngOnInit(): void {
     this.onGetMedicament();
+    this.onGetSales();
   }
 
 
@@ -127,14 +129,21 @@ export class MedicamentComponent implements OnInit{
 }
 
   deleteMedicament(medicamentDelete: Medicament) {
-    this.medicamentService.delete(medicamentDelete.id).subscribe({
-      next: (res) => {
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Se elimino correctamente' })
-        this.refreshList();
-      },
-      error: (e) => this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error al Eliminar'})
-    });
+        if(this.sales.filter(sale => sale.medicament?.id == medicamentDelete.id).length == 0){
+      this.medicamentService.delete(medicamentDelete.id).subscribe({
+        next: (res) => {
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Se elimino correctamente' })
+          this.refreshList();
+        },
+        error: (e) => this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error al Eliminar'})
+      });
+    } else {
+      this.messageService.add({ severity: 'info', summary: 'info', detail: 'El medicamento cuenta con ventas activas no se puede eliminar'})
+    }
   }
+
+
+
 
   refreshList(): void {
     this.onGetMedicament();
@@ -183,4 +192,15 @@ export class MedicamentComponent implements OnInit{
       });
     }
   }
+
+  onGetSales(): void {
+    this.SaleService.getAll()
+      .subscribe({
+        next: (sales) => {
+          this.sales = sales;
+        },
+        error: (e) => console.error(e)
+      });
+  }
+
 } 
