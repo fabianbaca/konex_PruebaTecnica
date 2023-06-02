@@ -1,15 +1,14 @@
 package com.fabian.pruebatecnica.services;
 
+import com.fabian.pruebatecnica.exeptions.MedicamentNotFoundException;
 import com.fabian.pruebatecnica.models.Medicament;
 import com.fabian.pruebatecnica.models.Sale;
-import com.fabian.pruebatecnica.repositories.MedicamentRepository;
 import com.fabian.pruebatecnica.repositories.SaleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,7 +23,7 @@ public class SaleServiceImpl implements SaleService {
     public Sale createSale(Sale sale) throws IOException {
         Optional<Medicament> medicament = serviceMedicament.getMedicamentById(sale.getMedicament().getId());
         if(!medicament.isPresent())
-            throw new RuntimeException("Not found medicamente");
+            throw new MedicamentNotFoundException();
 
         serviceMedicament.updateMedicament(sale.getMedicament(), sale.getMedicament().getId());
         return repository.save(sale);
@@ -37,9 +36,7 @@ public class SaleServiceImpl implements SaleService {
 
     @Override
     public List<Sale> findAllByDateSaleBetween(LocalDate startDate, LocalDate endDate) {
-
-
-
         return repository.findAllByDateSaleBetween(startDate, endDate);
     }
+
 }

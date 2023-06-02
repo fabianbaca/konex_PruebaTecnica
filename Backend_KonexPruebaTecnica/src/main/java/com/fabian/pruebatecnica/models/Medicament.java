@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -32,13 +32,13 @@ public class Medicament {
 
     @NotBlank(message = "date Manufacture cannot be null")
     @Column(name = "date_manufacture")
-    @DateTimeFormat(pattern ="yyyy-MM-dd'T'HH:mm:ss.SSSZ")
-    private LocalDateTime  dateManufacture;
+    @DateTimeFormat(pattern ="yyyy-MM-dd")
+    private LocalDate dateManufacture;
 
     @NotBlank(message = "date Expiration cannot be null")
     @Column(name = "date_expiration")
-    @DateTimeFormat(pattern ="yyyy-MM-dd'T'HH:mm:ss.SSSZ")
-    private LocalDateTime dateExpiration;
+    @DateTimeFormat(pattern ="yyyy-MM-dd")
+    private LocalDate dateExpiration;
 
     @NotBlank(message = "quantity Stock cannot be null")
     @Column(name = "quantity_stock")
@@ -50,7 +50,7 @@ public class Medicament {
 
     public Medicament() {}
 
-    public Medicament(Long id, String name, String laboratorie, LocalDateTime dateManufacture, LocalDateTime dateExpiration, Integer quantityStock, Double unitValue) {
+    public Medicament(Long id, String name, String laboratorie, LocalDate dateManufacture, LocalDate dateExpiration, Integer quantityStock, Double unitValue) {
         this.id = id;
         this.name = name;
         this.laboratorie = laboratorie;

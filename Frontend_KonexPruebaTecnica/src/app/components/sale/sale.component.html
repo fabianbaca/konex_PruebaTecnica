@@ -13,19 +13,19 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
     <div class="flex w-full justify-content-end gap-3">
       <button pButton label="Limpiar" class="p-button-outlined" icon="pi pi-filter-slash" (click)="onCrear()"></button>
       <span class="p-input-icon-left ml-auto"></span>
-      <p-calendar placeholder="Fecha inicial" name="startDate" [(ngModel)]="startDate" dateFormat="dd-mm-yy" [appendTo]="'body'" ></p-calendar>
-          <p-calendar placeholder="Fecha final" name="endDate" [(ngModel)]="endDate" dateFormat="dd-mm-yy" [appendTo]="'body'" ></p-calendar>
-          <button pButton label="Buscar" class="p-button-outlined" icon="pi pi-search" (click)="onfindAllByDateSaleBetween()"></button>
+      <p-calendar placeholder="Fecha inicial" name="startDate" [(ngModel)]="startDate" dateFormat="dd-mm-yy" [appendTo]="'body'"></p-calendar>
+      <p-calendar placeholder="Fecha final" [minDate]="startDate"  name="endDate" [(ngModel)]="endDate" dateFormat="dd-mm-yy" [appendTo]="'body'" ></p-calendar>
+      <button pButton label="Buscar" class="p-button-outlined" icon="pi pi-search" (click)="onfindAllByDateSaleBetween()"></button>
     </div>
   </ng-template>
 
     <ng-template pTemplate="header">
         <tr>
-            <th style="min-width:15rem">Fecah de venta</th>
-            <th style="min-width:15rem">Medicamento</th>
-            <th style="min-width:15rem">Cantidad</th>
-            <th style="min-width:15rem">Valor unitario</th>
-            <th style="min-width:10rem">Valor total</th>
+            <th id="dateSale" style="min-width:15rem">Fecah de venta</th>
+            <th id="medicament" style="min-width:15rem">Medicamento</th>
+            <th id="quantity" style="min-width:15rem">Cantidad</th>
+            <th id="unitValue" style="min-width:15rem">Valor unitario</th>
+            <th id="totalValue" style="min-width:10rem">Valor total</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-sales>

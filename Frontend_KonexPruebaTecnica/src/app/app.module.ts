@@ -30,7 +30,8 @@ import { PrimeNgModule } from './prime-ng/prime-ng.module';
     BrowserAnimationsModule
   ],
   providers: [
-    MedicamentService,DatePipe
+    MedicamentService,
+    DatePipe,
   ],
   bootstrap: [AppComponent]
 })

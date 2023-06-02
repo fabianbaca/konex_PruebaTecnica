@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { Medicament } from 'src/app/models/medicament.model';
 import { Sale } from 'src/app/models/sale.model';
@@ -11,7 +11,7 @@ import { SaleService } from 'src/app/service/sale.service';
   selector: 'app-medicament',
   templateUrl: './medicament.component.html',
   styleUrls: ['./medicament.component.css'],
-  providers: [MessageService, ConfirmationService]
+  providers: [MessageService]
 })
 export class MedicamentComponent implements OnInit{
 
@@ -19,6 +19,7 @@ export class MedicamentComponent implements OnInit{
   medicament!: Medicament;
   medicaments!: Medicament[];
   selectedMedicament: Medicament[];
+  medicamentTitle: string;
   submitted: boolean;
   medicamentDialog: boolean;
   sale!: Sale;
@@ -33,6 +34,7 @@ export class MedicamentComponent implements OnInit{
     this.medicamentDialog = false;
     this.editDialog = false;
     this.saledialog = false;
+    this.medicamentTitle = "";
   }
 
   ngOnInit(): void {
@@ -44,7 +46,6 @@ export class MedicamentComponent implements OnInit{
     this.medicamentService.getAll()
       .subscribe({
         next: (medicaments) => {
-          console.log(medicaments)
           this.medicaments = medicaments;
         },
         error: (e) => console.error(e)
@@ -61,13 +62,16 @@ export class MedicamentComponent implements OnInit{
 
   saveMedicament() {
     this.submitted = true;
+    if (this.medicament.name!.trim() && this.medicament?.quantityStock! >= 0 && this.medicament?.unitValue! >= 0) {
 
-    if (this.medicament.name!.trim()) {
       let existsMedicament =this.medicaments.find((val) => val.name == this.medicament.name)
       if(existsMedicament) {
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'El nombre del medicamenton no se puede repetir'})
       } else {
-        this.medicamentService.create(this.medicament).subscribe({
+        let dateManufacture =  this.datePipe.transform(this.medicament.dateManufacture!, 'yyyy-MM-dd');
+        let dateExpiration = this.datePipe.transform(this.medicament.dateExpiration, 'yyyy-MM-dd');
+
+        this.medicamentService.create(this.medicament, dateManufacture!, dateExpiration!).subscribe({
           next: () => {
             this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Se Registro correctamente' });
                 this.medicaments = [...this.medicaments];
@@ -76,7 +80,6 @@ export class MedicamentComponent implements OnInit{
                 this.refreshList();
               },
               error: (e) =>  {
-                console.log(e)
                 this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error al Registrar'})
               }
             
@@ -86,6 +89,7 @@ export class MedicamentComponent implements OnInit{
   }
 
   openNew() {
+    this.medicamentTitle = "Crear medicamento";
     this.medicament = new Medicament;
     this.submitted = false;
     this.medicamentDialog = true;
@@ -98,6 +102,7 @@ export class MedicamentComponent implements OnInit{
   }
 
   onEditMedicament(medicamentEdit: Medicament) {
+    this.medicamentTitle = "Editar medicamento";
     this.medicament = { ...medicamentEdit };
     this.medicamentDialog = true;
     this.editDialog = true;
@@ -146,7 +151,7 @@ export class MedicamentComponent implements OnInit{
       this.submitted = false;
       this.saledialog = true;
     }  else {
-      this.messageService.add({ severity: 'info', summary: 'info', detail: 'el medicamento '+medicamentSale.name+' no tiene cantidad disponible para la venta'})
+      this.messageService.add({ severity: 'info', summary: 'info', detail: 'El medicamento '+medicamentSale.name+' no tiene cantidad disponible para su venta'})
     }
   }
 
@@ -165,7 +170,6 @@ export class MedicamentComponent implements OnInit{
       this.medicament.quantityStock = this.medicament?.quantityStock!-this.sale?.quantity!;
       this.sale.medicament = this.medicament;
       this.sale.unitValue = this.medicament.unitValue;
-      console.log(this.sale);
       this.sale.dateSale = new Date();
       this.SaleService.create(this.sale).subscribe({
         next: () => {

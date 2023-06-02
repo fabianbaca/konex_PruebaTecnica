@@ -1,6 +1,7 @@
 package com.fabian.pruebatecnica.services;
 
 import com.fabian.pruebatecnica.dto.MessageRest;
+import com.fabian.pruebatecnica.exeptions.MedicamentNotFoundException;
 import com.fabian.pruebatecnica.models.Medicament;
 import com.fabian.pruebatecnica.repositories.MedicamentRepository;
 import jakarta.transaction.Transactional;
@@ -33,7 +34,7 @@ public class MedicamentServiceImpl implements MedicamentService {
     public Medicament getMedicamentByName(String name) throws IOException {
         Optional<Medicament> medicament = repository.findByName(name);
         if (!medicament.isPresent()) {
-            throw new RuntimeException("Not found medicamente with this name");
+            throw new MedicamentNotFoundException();
         }
         return medicament.get();
     }
@@ -47,8 +48,7 @@ public class MedicamentServiceImpl implements MedicamentService {
     @Transactional
     public MessageRest deleteMedicament(Long id) throws IOException {
         repository.deleteById(id);
-        MessageRest messageRest = new MessageRest("200", "successfully remove");
-        return messageRest;
+        return new MessageRest("200", "successfully remove");
     }
 
     @Override
@@ -56,7 +56,7 @@ public class MedicamentServiceImpl implements MedicamentService {
 
          Optional<Medicament> oldMedicament = getMedicamentById(id);
          if (!oldMedicament.isPresent()) {
-             throw new RuntimeException("Not found medicamente that modified");
+             throw new MedicamentNotFoundException();
          }
 
          oldMedicament.get().setName(medicament.getName());

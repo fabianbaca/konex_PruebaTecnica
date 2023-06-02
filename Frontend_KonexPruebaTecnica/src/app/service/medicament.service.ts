@@ -20,7 +20,8 @@ export class MedicamentService {
     return this.http.get<Medicament>(`${baseUrl}/${id}`);
   }
 
-  create(data: any): Observable<any> {
+  create(medicament: Medicament, dateManufacture: string, dateExpiration: string ): Observable<any> {
+    const data = {...medicament, dateManufacture: dateManufacture, dateExpiration: dateExpiration}
     return this.http.post(`${baseUrl}/`, data);
   }
 

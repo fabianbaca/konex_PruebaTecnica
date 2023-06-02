@@ -5,8 +5,8 @@ import lombok.Data;
 
 @Data
 public class MessageRest {
-    public String code;
-    public String mensaje;
+    private String code;
+    private String mensaje;
 
 
     public MessageRest() {

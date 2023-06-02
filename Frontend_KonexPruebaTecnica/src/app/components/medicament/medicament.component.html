@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <p-table
 #dt
 [value]="medicaments"
@@ -21,15 +22,13 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
     </ng-template>
     <ng-template pTemplate="header">
         <tr>
-
-            <th style="min-width:15rem">Name</th>
-            <th style="min-width:15rem">laboratorie</th>
-            <th style="min-width:15rem">date Manufacture</th>
-            <th style="min-width:15rem">date Expiration</th>
-            <th style="min-width:10rem">quantity Stock</th>
-            <th style="min-width:10rem">unit Value</th>
-            <th></th>
-
+            <th id="name" style="min-width:15rem">Nombre</th>
+            <th id="labortaire"style="min-width:15rem">Laboratorio</th>
+            <th id="dateManufacture"style="min-width:15rem">Fecha de fabricación</th>
+            <th id="dateExpiration"style="min-width:15rem">Fecha de vencimiento</th>
+            <th id="quantityStock"style="min-width:10rem">Cantidad en stock</th>
+            <th id="unitValue"style="min-width:10rem">Valor unitario</th>
+            <th id="buttons"></th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-medicament>
@@ -52,7 +51,7 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
     </ng-template>
 </p-table>
 
-<p-dialog [(visible)]="medicamentDialog" [style]="{ width: '500px' }" header="medicament Details" [modal]="true" styleClass="p-fluid">
+<p-dialog [(visible)]="medicamentDialog" [style]="{ width: '500px' }" [header]="medicamentTitle" [modal]="true" styleClass="p-fluid">
     <ng-template pTemplate="content">
         <div class="field">
             <label for="name">Nombre</label>
@@ -71,21 +70,22 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
         </div>
         <div class="field">
             <label for="dateExpiration">Fecha de vencimiento</label>
-            <p-calendar id="dateExpiration" class="w-12rem p-3 m-3" [(ngModel)]="medicament.dateExpiration" dateFormat="yy-mm-dd" [appendTo]="'body'"> </p-calendar>
+            <p-calendar id="dateExpiration" class="mr-2" [(ngModel)]="medicament.dateExpiration" dateFormat="yy-mm-dd" [appendTo]="'body'"></p-calendar>
             <small class="p-error" *ngIf="submitted && !medicament.dateExpiration">Fecha de vencimiento es requerido.</small>
         </div>
         <div class="field col">
             <label for="unitValue"> Valor unitario </label>
-            <p-inputNumber id="unitValue" [(ngModel)]="medicament.unitValue" mode="currency" currency="USD" locale="en-US"></p-inputNumber>
+            <p-inputNumber id="unitValue" [(ngModel)]="medicament.unitValue"></p-inputNumber>
             <small class="p-error" *ngIf="submitted && !medicament.unitValue">Valor unitario es requerido.</small>
+            <small class="p-error" *ngIf="submitted && (medicament?.unitValue! < 0)">El valor unitario no puede ser menor que 1</small>
         </div>
         <div class="field col">
             <label for="quantityStock">Cantidad en stock</label>
             <p-inputNumber id="quantityStock" [(ngModel)]="medicament.quantityStock"></p-inputNumber>
             <small class="p-error" *ngIf="submitted && !medicament.quantityStock">Cantidad is requerido.</small>
+            <small class="p-error" *ngIf="submitted && (medicament?.quantityStock! < 0)">La cantida no puede ser menor a 1</small>
         </div>
     </ng-template>
-
     <ng-template pTemplate="footer">
         <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-danger" (click)="hideDialog()"></button>
         <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-success mr-2" (click)="clickSaveDialog()"></button>
@@ -107,7 +107,6 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
             <p-inputNumber id="quantityStock" [(ngModel)]="sale.totalValue" [readonly]="true"></p-inputNumber>
         </div>
     </ng-template>
-
     <ng-template pTemplate="footer">
         <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-danger" (click)="hideDialog()"></button>
         <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-success mr-2" (click)="saveSale()"></button>
