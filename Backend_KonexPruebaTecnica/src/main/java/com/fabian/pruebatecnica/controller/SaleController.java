@@ -34,7 +34,7 @@ public class SaleController {
     }
 
     @GetMapping("/betweenDate")
-    public ResponseEntity<List<Sale>> betweenDate(@RequestParam("start") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate, @RequestParam("end") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate  ) {
+    public ResponseEntity<List<Sale>> betweenDate(@RequestParam("start") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate, @RequestParam("end") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate  )  {
         return ResponseEntity.status(HttpStatus.OK).body(saleService.findAllByDateSaleBetween(startDate, endDate));
     }
 

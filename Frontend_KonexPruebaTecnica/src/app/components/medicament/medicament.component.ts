@@ -154,6 +154,7 @@ export class MedicamentComponent implements OnInit{
   }
 
   openDialogSale(medicamentSale: Medicament) {
+    this.medicamentTitle = "Registro Venta";
     if(medicamentSale?.quantityStock! >= 1) {
       this.medicament = medicamentSale;
       this.sale = new Sale;
@@ -179,8 +180,10 @@ export class MedicamentComponent implements OnInit{
       this.medicament.quantityStock = this.medicament?.quantityStock!-this.sale?.quantity!;
       this.sale.medicament = this.medicament;
       this.sale.unitValue = this.medicament.unitValue;
-      this.sale.dateSale = new Date();
-      this.SaleService.create(this.sale).subscribe({
+      const currentDate = new Date();
+      this.sale.timeSale = currentDate.toISOString().substring(11, 19);
+      const saleDate = this.datePipe.transform(currentDate, 'yyyy-MM-dd');
+      this.SaleService.create(this.sale, saleDate!).subscribe({
         next: () => {
           this.saledialog = false;
           this.sale = new Sale;

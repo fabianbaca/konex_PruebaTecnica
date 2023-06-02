@@ -31,7 +31,8 @@ public class SaleServiceImpl implements SaleService {
 
     @Override
     public List<Sale> getSale() {
-        return repository.findAll();
+        List<Sale> saleList = repository.findAll();
+        return saleList ;
     }
 
     @Override

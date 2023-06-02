@@ -21,8 +21,12 @@ public class Sale {
 
     @Column(name = "date_sale")
     @NotEmpty(message = "date Value cannot be null")
-    @DateTimeFormat(pattern ="yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+    @DateTimeFormat(pattern ="yyyy-MM-dd")
     private LocalDate dateSale;
+
+    @Column(name = "time_sale")
+    @NotEmpty(message = "date Value cannot be null")
+    private String timeSale;
 
     @ManyToOne
     @NotEmpty(message = "unit Value cannot be null")
@@ -45,8 +49,9 @@ public class Sale {
     public Sale() {
     }
 
-    public Sale(Long id, LocalDate dateSale, Medicament medicament, Integer quantity, BigDecimal unitValue, BigDecimal totalValue) {
+    public Sale(Long id, LocalDate dateSale, String time_Sale, Medicament medicament, Integer quantity, BigDecimal unitValue, BigDecimal totalValue) {
         this.id = id;
+        this.timeSale = time_Sale;
         this.dateSale = dateSale;
         this.medicament = medicament;
         this.quantity = quantity;

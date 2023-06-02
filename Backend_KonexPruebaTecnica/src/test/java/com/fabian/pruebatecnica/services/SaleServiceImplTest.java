@@ -12,6 +12,7 @@ import org.mockito.MockitoAnnotations;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -43,7 +44,7 @@ class SaleServiceImplTest {
         MockitoAnnotations.initMocks(this);
         medicament = new Medicament(1L, "Paracetamol", "Laboratorio A",
                 LocalDate.of(2023, 5, 1), LocalDate.of(2025, 4, 30), 100, 2.5);
-        sale = new Sale(1l, LocalDate.of(2023, 5, 1), medicament,  100, new BigDecimal(2.0),  new BigDecimal(100.0));
+        sale = new Sale(1l, LocalDate.of(2023, 5, 1), "04:39:16", medicament,  100, new BigDecimal(2.0),  new BigDecimal(100.0));
     }
 
     @Test

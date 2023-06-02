@@ -21,7 +21,8 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
 
     <ng-template pTemplate="header">
         <tr>
-            <th id="dateSale" style="min-width:15rem">Fecah de venta</th>
+            <th id="dateSale" style="min-width:15rem">Fecha de venta</th>
+            <th id="dateSale" style="min-width:15rem">Hora</th>
             <th id="medicament" style="min-width:15rem">Medicamento</th>
             <th id="quantity" style="min-width:15rem">Cantidad</th>
             <th id="unitValue" style="min-width:15rem">Valor unitario</th>
@@ -30,7 +31,8 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
     </ng-template>
     <ng-template pTemplate="body" let-sales>
         <tr>
-            <td>{{sales.dateSale }}</td>
+            <td>{{ sales.dateSale   }}</td>
+            <td>{{ sales.timeSale }}</td>
             <td>{{sales?.medicament?.name}}</td>
             <td>{{sales.quantity}}</td>
             <td>{{sales.unitValue | currency: 'USD'}}</td>

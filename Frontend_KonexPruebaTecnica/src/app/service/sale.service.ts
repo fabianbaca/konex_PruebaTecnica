@@ -16,7 +16,9 @@ export class SaleService {
     return this.http.get<Sale[]>(`${environment.API_URL}/api/Sale/`);
   }
 
-  create(data: Sale): Observable<any> {
+  create(sale: Sale, dateSale: string ): Observable<any> {
+    const data = {...sale, dateSale: dateSale}
+    console.log(data);
     return this.http.post(`${environment.API_URL}/api/Sale/`, data);
   }
 
